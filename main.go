@@ -11,6 +11,7 @@ import (
 func main() {
 	var dumpPath, query string
 
+	// Loading Command Line Arguments if provided.
 	flag.StringVar(&dumpPath, "p", "enwiki-latest-abstract1.xml.gz", "wiki abstract dump path")
 	flag.StringVar(&query, "q", "small wild cat", "search query")
 
@@ -19,6 +20,7 @@ func main() {
 
 	start := time.Now()
 
+	// Loading all documents from provided path.
 	docs, err := utils.LoadDocuments(dumpPath)
 	if err != nil {
 		log.Fatal("failed to load documents: ", err)
@@ -28,9 +30,13 @@ func main() {
 
 	start = time.Now()
 	idx := make(utils.Index)
+
+	// Indexing all the documents.
 	idx.Add(docs)
 	log.Printf("Indexed %v document in %v", len(docs), time.Since(start))
 	start = time.Now()
+
+	// Searching the query in all indexed documents.
 	matchedIDs := idx.Search(query)
 	log.Printf("Search found %d documents in %v", len(matchedIDs), time.Since(start))
 	for _, id := range matchedIDs {
