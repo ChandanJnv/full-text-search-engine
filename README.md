@@ -1,4 +1,3 @@
-```markdown
 # Simple Full-Text Search Engine
 
 This repository contains a simple full-text search engine implemented in Go.
